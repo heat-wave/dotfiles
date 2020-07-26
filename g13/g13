@@ -1,0 +1,8 @@
+#!/bin/bash
+cat /etc/g13/"$1".bind > /tmp/g13-0
+
+bus=$(lsusb | grep "G13" | grep -o -E "Bus [0-9]{3}" | grep -o -E "[0-9]{3}")
+device=$(lsusb | grep "G13" | grep -o -E "Device [0-9]{3}" | grep -o -E "[0-9]{3}")
+sudo chmod a+rw /dev/uinput
+sudo chmod a+rw /dev/bus/usb/"$bus"/"$device"
+g13d --pipe_in /tmp/g13-0

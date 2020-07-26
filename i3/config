@@ -1,0 +1,238 @@
+
+
+#########################################################################################################################################
+#|||    MODIFIERS
+#########################################################################################################################################
+set $mod Mod4
+set $alt Mod1
+
+
+#########################################################################################################################################
+#|||    SETTINGS
+#########################################################################################################################################
+gaps inner 10
+gaps outer 5
+smart_gaps on
+smart_borders on
+workspace_auto_back_and_forth yes
+popup_during_fullscreen smart
+focus_follows_mouse no
+focus_on_window_activation focus
+focus_wrapping yes
+for_window [class=.*] border pixel 0
+
+
+#########################################################################################################################################
+#|||    FONTS & COLORS & FRAME
+#########################################################################################################################################
+font pango:Noto Sans for Powerline 14
+
+set_from_resource $accent accent #000000
+set $black                              #000000
+set $grey                               #373B41
+set $white                              #FFFFFF
+set $red                                #F10F09
+
+#class                                  border          backgr.         text            split
+client.focused                          $accent         $accent         $black          $accent
+client.focused_inactive                 $grey           $grey           $white          $grey
+client.unfocused                        $grey           $grey           $white          $grey
+client.urgent                           $red            $red            $black          $red
+
+
+#########################################################################################################################################
+#|||    WINDOWS
+#########################################################################################################################################
+# change focus
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+# split in vertical orientation
+bindsym $mod+v split v
+
+bindsym $alt+Insert floating toggle
+bindsym $mod+$alt+Insert sticky toggle
+bindsym $mod+f fullscreen toggle
+
+floating_modifier $mod
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink height 10 px or 10 ppt
+        bindsym semicolon resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# focus the parent/child container
+#bindsym $mod+a focus parent
+#bindsym $mod+d focus child
+
+#########################################################################################################################################
+#|||    APPS KEYBINDINGS                                -- MOD + CTRL 
+#########################################################################################################################################
+bindsym $mod+Return exec terminator
+bindsym $mod+d exec dmenu_run
+
+#########################################################################################################################################
+#|||    MEDIA KEYBINDINGS                               -- funckeys
+#########################################################################################################################################
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 1 +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 1 -5% #decrease sound volume
+
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+#########################################################################################################################################
+#|||    WORKSPACES
+#########################################################################################################################################
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+bindsym $mod+$alt+Left workspace prev_on_output
+bindsym $mod+$alt+Right workspace next_on_output
+bindsym $mod+Tab workspace back_and_forth
+bindsym $alt+Tab workspace back_and_forth
+
+
+#########################################################################################################################################
+#|||    MONITORS
+#########################################################################################################################################
+set $monitor1 HDMI-0
+set $monitor2 DVI-D-0
+
+workspace $ws1 output $monitor1
+workspace $ws2 output $monitor1
+workspace $ws3 output $monitor1
+workspace $ws4 output $monitor1
+workspace $ws5 output $monitor1
+workspace $ws6 output $monitor1
+workspace $ws7 output $monitor1
+workspace $ws8 output $monitor2
+workspace $ws9 output $monitor2
+workspace $ws10 output $monitor2
+
+
+#########################################################################################################################################
+#|||    WM COMMANDS
+#########################################################################################################################################
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+# lock screen
+bindsym $mod+Shift+l exec ~/.i3/i3lock-fancy-multimonitor/lock
+
+
+#########################################################################################################################################
+#|||    LAUNCHER
+#########################################################################################################################################
+mode "launcher" {
+        bindsym f exec firejail firefox ; mode "default"
+        bindsym t exec telegram-desktop ; mode "default"
+        bindsym d exec discord ; mode "default"
+        bindsym s exec steam ; mode "default"
+        bindsym e exec emacs ; mode "default"
+        bindsym v exec vlc ; mode "default"
+        bindsym l exec streamlink-twitch-gui ; mode "default"
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+x mode "launcher"
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+        font pango:Fira Mono for Powerline, Font Awesome 5 Free Solid 12
+        tray_output primary
+        status_command i3blocks  -c $HOME/.config/i3blocks/config
+}
+
+
+#########################################################################################################################################
+#|||    AUTOSTART
+#########################################################################################################################################
+exec setxkbmap -option 'grp:win_space_toggle' -layout us,ru
+exec xrandr --output HDMI-0 --mode 2560x1440 --pos 0x0 --output DVI-D-0 --mode 1920x1080 --pos 2560x0 --rotate left
+#exec --no-startup-id nm-applet
+exec_always nitrogen --set-scaled ~/Downloads/nature-sky-sunset-the-mountains-66997.jpg --head=0
+exec_always nitrogen --set-scaled ~/Downloads/silhouette-of-trees-during-sunset-1723637.jpg --head=1
+
+# quake-like terminal popup
+exec --no-startup-id terminator -r quake-terminator
+for_window [window_role="quake-terminator"] floating enable;
+for_window [window_role="quake-terminator"] move scratchpad; [window_role="quake-terminator"] scratchpad show; resize set 1080 720; move position center; move up 160; move scratchpad
+bindsym $mod+t [window_role="quake-terminator"] scratchpad show

@@ -1,0 +1,7 @@
+Host gcp-undertaker
+    User     allpicksucks_gmail_com
+    Port     22
+    Hostname 34.75.240.80
+    IdentityFile ~/.ssh/id_rsa
+    RequestTTY force
+    SendEnv  TOMBKEY
